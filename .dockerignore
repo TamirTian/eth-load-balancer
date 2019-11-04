@@ -1,0 +1,9 @@
+.dockerignore
+.gitignore
+.git
+.editorconfig
+.env
+README.md
+package-lock.json
+node_modules
+dist
