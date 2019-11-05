@@ -6,7 +6,7 @@ Simple Ethereum Load Balancer
 * [x] Load-balancing and limit 70 requests per node
 * [ ] Customize limit number of request
 * [ ] Multi threads
-* [ ] Distributed 
+* [x] Distributed 
 
 
 ## Run

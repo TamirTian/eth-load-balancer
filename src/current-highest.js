@@ -12,6 +12,8 @@ const Model = mongoose.model('current-highest', Schema, 'current-highest');
 let number = -1
 let savedNumber = -1
 
+Model.updateOne({}, { $setOnInsert: { number } }, { upsert: true })
+
 function get () {
   return number
 }
@@ -24,23 +26,23 @@ function isOK () {
   return number - savedNumber < 7
 }
 
-async function load () {
-  const data = await Model.findOne({})
-  if (!data) return
-  if (data.number > number) {
-    savedNumber = number = data.number
+async function sync () {
+  const model = await Model.findOne({})
+  if (!model) return
+
+  savedNumber = model.number
+
+  if (savedNumber > number) {
+    number = savedNumber
+    return
   }
-}
+  if (savedNumber === number) return
 
-async function save () {
-  if (number === savedNumber) return
-
-  const res = await Model.updateOne({}, { $set: { number } }, { upsert: true })
+  await Model.updateOne({ number: { $lt: number } }, { $set: { number } })
   savedNumber = number
 }
 
-setInterval(save, 3000)
-load()
+setInterval(sync, 3000)
 
 module.exports = {
   get,
