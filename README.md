@@ -15,7 +15,7 @@ docker run -p 3000:3000 -e DATABASE=mongodb://192.168.31.230:27017/eth-load-bala
 ```
 ### Test Get Balance
 ```bash
-curl -X POST http://localhost:3000 -H 'Content-Type: application/json'-d '{"jsonrpc": "2.0", "method": "eth_getBalance", "params": [ "0xeF8EBd0A6e4a0C8e82EcdfD60ffF82fd346ec448", "latest" ], "id": 2 }'
+curl -X POST http://localhost:3000 -H 'Content-Type: application/json' -d '{"jsonrpc": "2.0", "method": "eth_getBalance", "params": [ "0xeF8EBd0A6e4a0C8e82EcdfD60ffF82fd346ec448", "latest" ], "id": 2 }'
 ```
 Response
 ```json
