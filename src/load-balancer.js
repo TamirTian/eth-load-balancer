@@ -54,6 +54,7 @@ function healthInfo () {
     const block = ok ? node.getHighest() : {}
     return {
       index: ++index,
+      id: node.id,
       ok,
       highestBlock: ok ? { number: block.number, hash: block.hash } : null
     }

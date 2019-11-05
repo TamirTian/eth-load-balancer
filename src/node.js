@@ -24,7 +24,6 @@ class Node {
   }
 
   async request (body) {
-    console.info(`Requesting ${this.rpc}`)
     const { data } = await axios.post(this.rpc, body, {
       headers: { 'Content-Type': 'application/json', },
       timeout: 60 * 1000

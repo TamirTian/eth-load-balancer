@@ -109,10 +109,14 @@ function checkTimeout () {
 
 
 function print () {
-  const handling = Object.keys(nodeTasks)
-    .map(countHandling)
-    .reduce((total, item) => total + item, 0)
-  console.log(`${Date.now()} Handling ${handling}`)
+  let total = 0
+  Object.keys(nodeTasks)
+    .map(nodeId => ({ nodeId, total: countHandling(nodeId) }))
+    .forEach(info => {
+      console.info(`Requesting ${info.nodeId} ${info.total}`)
+      total += info.total
+    })
+  console.log(`${Date.now()} Total ${total}`)
 }
 
 setInterval(checkTimeout, 500)
