@@ -1,10 +1,10 @@
 const _ = require('lodash');
 const uuid = require('uuid/v4');
 const EventEmitter = require('events');
-
+const config = require('./config')
 const emitter = new EventEmitter();
 // https://ethereum.stackexchange.com/a/38614
-const limit = 70
+const limit = config.limit
 const nodeTasks = {}
 
 emitter.on('TASK_CREATED', checkTask);
@@ -107,6 +107,15 @@ function checkTimeout () {
   })
 }
 
+
+function print () {
+  const handling = Object.keys(nodeTasks)
+    .map(countHandling)
+    .reduce((total, item) => total + item, 0)
+  console.log(`${Date.now()} Handling ${handling}`)
+}
+
 setInterval(checkTimeout, 500)
+setInterval(print, 10 * 1000)
 
 exports.dispatch = dispatch

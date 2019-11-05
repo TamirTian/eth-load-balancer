@@ -1,7 +1,7 @@
 // getting-started.js
 const mongoose = require('mongoose');
 const config = require('./config')
-mongoose.connect(config.DATABASE, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(config.database, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const Schema = new mongoose.Schema({
   number: Number
