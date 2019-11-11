@@ -101,7 +101,7 @@ function checkTimeout () {
     const tasks = nodeTasks[nodeId]
 
     const task = tasks
-      .find(task => Date.now() - 5 * 1000 > task.createdAt)
+      .find(task => Date.now() - 30 * 1000 > task.createdAt)
     if (!task) return
     handleTimeout(task)
   })
