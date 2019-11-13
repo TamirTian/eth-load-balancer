@@ -8,11 +8,18 @@ app.use(bodyParser());
 
 app.use(async ctx => {
   const method = ctx.method.toUpperCase()
-  if (method === 'GET' && ctx.request.path === '/health_info'){
-    ctx.body = {
-      mongo: CurrentHighest.isOK(),
-      nodes: LoadBalancer.healthInfo()
+  if (method === 'GET') {
+    if (ctx.request.path === '/healthcheck') {
+      const ok = [CurrentHighest.isOK(), LoadBalancer.healthInfo().map(item => item.ok).some(Boolean)].every(Boolean)
+      ctx.status = ok ? 200 : 503
     }
+    if (ctx.request.path === '/health_info') {
+      ctx.body = {
+        mongo: CurrentHighest.isOK(),
+        nodes: LoadBalancer.healthInfo()
+      }
+    }
+    return
   }
   if (method !== 'POST') return ctx.status = 200
   const { body } = ctx.request
@@ -42,6 +49,6 @@ async function start () {
 
 start()
 
-process.on( 'SIGINT', function() {
+process.on('SIGINT', function () {
   process.exit();
 })

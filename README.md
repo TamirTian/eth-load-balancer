@@ -26,6 +26,11 @@ Response
 }
 ```
 
+### Health Check
+```bash
+curl -X GET http://localhost:3000/healthcheck 
+```
+
 ### See Health Info(no healthcheck path)
 ```bash
 curl -X GET http://localhost:3000/health_info 
