@@ -1,19 +1,20 @@
-const Web3 = require('web3')
 const assert = require('assert')
 const Node = require('./node')
 const { dispatch } = require('./worker')
 const CurrentHighest = require('./current-highest')
 const _ = require('lodash')
+const caller = require('./simple-eth-caller')
 let globalNodes = []
 
 async function validateNetIds (netId, RPCs) {
   assert(netId, `Invalid netId: ${netId}`)
   const nets = await Promise.all(
     RPCs.map(async rpc => ({
-      id: await new Web3(rpc).eth.net.getId(),
+      id: await caller.getNetId(rpc),
       rpc
     }))
   )
+
   const invalidNets = nets.filter(net => (netId | 0) !== net.id)
   if (invalidNets.length)
     throw new Error(`Invalid nets ${JSON.stringify(invalidNets)}`)

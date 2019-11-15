@@ -1,11 +1,10 @@
-const Web3 = require('web3')
 const uuid = require('uuid/v4')
 const axios = require('axios');
+const caller = require('./simple-eth-caller');
 
 class Node {
   constructor (rpc) {
     this.id = uuid()
-    this.web3 = new Web3(rpc)
     this.rpc = rpc
     this.lastAccessedTime = 0
   }
@@ -13,7 +12,7 @@ class Node {
   start () {
     const that = this
     that.timer = setInterval(async () => {
-      that.highest = await that.web3.eth.getBlock('latest')
+      that.highest = await caller.getHighest(this.rpc)
       that.lastAccessedTime = Date.now()
     }, 2000)
   }
