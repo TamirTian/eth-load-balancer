@@ -22,12 +22,8 @@ class Node {
     return this.highest
   }
 
-  async request (body) {
-    const { data } = await axios.post(this.rpc, body, {
-      headers: { 'Content-Type': 'application/json', },
-      timeout: 60 * 1000
-    })
-    return data
+  request (body) {
+    return caller.request(this.rpc, body)
   }
 
   isOK (gteBlockNumber) {
